@@ -10,8 +10,36 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 0) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_23_220548) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "bills", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "senators", force: :cascade do |t|
+    t.string "name"
+    t.string "party"
+    t.integer "senate_key"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "votes", force: :cascade do |t|
+    t.integer "session_code"
+    t.string "choice"
+    t.bigint "senator_id", null: false
+    t.bigint "bill_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["bill_id"], name: "index_votes_on_bill_id"
+    t.index ["senator_id"], name: "index_votes_on_senator_id"
+  end
+
+  add_foreign_key "votes", "bills"
+  add_foreign_key "votes", "senators"
 end

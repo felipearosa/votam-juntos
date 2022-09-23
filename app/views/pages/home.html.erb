@@ -1,6 +1,7 @@
 <h1>Pages#home</h1>
 <p>Find me in app/views/pages/home.html.erb</p>
-<%= form_with url: "/comparativos" do |form| %>
+<%= form_with url: "/comparativos", method: :get do |form| %>
   <%= form.select :senador1,  @parlamentares.map { |parlamentar| ["#{parlamentar[:name]} - #{parlamentar[:partido]}", parlamentar[:id]]} %>
+  <%= form.select :senador2,  @parlamentares.map { |parlamentar| ["#{parlamentar[:name]} - #{parlamentar[:partido]}", parlamentar[:id]]} %>
   <%= form.submit "Procurar" %>
 <% end %>

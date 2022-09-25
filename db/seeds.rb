@@ -11,11 +11,11 @@ Senator.destroy_all
 Bill.destroy_all
 puts 'seeding'
 
-unjsoned_parlamentar = URI.open("https://legis.senado.leg.br/dadosabertos/senador/lista/atual.json").read
+i = 0
 
-@parlamentar = JSON.parse(unjsoned_parlamentar)["ListaParlamentarEmExercicio"]["Parlamentares"]["Parlamentar"].first["IdentificacaoParlamentar"]
+unjsoned_parlamentares = URI.open("https://legis.senado.leg.br/dadosabertos/senador/lista/atual.json").read
 
-@parlamentares = JSON.parse(unjsoned_parlamentar)["ListaParlamentarEmExercicio"]["Parlamentares"]["Parlamentar"]
+@parlamentares = JSON.parse(unjsoned_parlamentares)["ListaParlamentarEmExercicio"]["Parlamentares"]["Parlamentar"]
 
 @parlamentares.each do |parlamentar|
   @senator = Senator.new
@@ -28,19 +28,22 @@ unjsoned_parlamentar = URI.open("https://legis.senado.leg.br/dadosabertos/senado
   unjsoned_votes = URI.open("https://legis.senado.leg.br/dadosabertos/senador/#{@senator.senate_key}/votacoes.json?sigla=PEC").read
   next if JSON.parse(unjsoned_votes)["VotacaoParlamentar"]["Parlamentar"].nil?
 
-  @votes = JSON.parse(unjsoned_votes)["VotacaoParlamentar"]["Parlamentar"]["Votacoes"]["Votacao"].first
+  JSON.parse(unjsoned_votes)["VotacaoParlamentar"]["Parlamentar"]["Votacoes"]["Votacao"].each do |vote|
+    @bill = Bill.new
+    @bill.name = vote["Materia"]["DescricaoIdentificacao"]
+    @bill.description = vote["DescricaoVotacao"]
+    @bill.save!
 
-  @bill = Bill.new
-  @bill.name = @votes["Materia"]["DescricaoIdentificacao"]
-  @bill.description = @votes["DescricaoVotacao"]
-  @bill.save!
+    @vote = Vote.new
+    @vote.session_code = vote["CodigoSessaoVotacao"]
+    @vote.choice = vote["SiglaDescricaoVoto"]
+    @vote.senator = @senator
+    @vote.bill = @bill
+    @vote.save!
+  end
 
-  @vote = Vote.new
-  @vote.session_code = @votes["CodigoSessaoVotacao"]
-  @vote.choice = @votes["SiglaDescricaoVoto"]
-  @vote.senator = @senator
-  @vote.bill = @bill
-  @vote.save!
+  puts "Senator #{i} done"
+  i += 1
 end
 
 puts 'seeding finished'

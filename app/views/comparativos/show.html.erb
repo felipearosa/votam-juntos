@@ -6,21 +6,12 @@
       <td>Matéria</td>
       <td>Voto</td>
       <td>Descrição da Votação</td>
-      <td>Segundo</td>
+      <%# <td>Segundo</td> %>
     </tr>
   </thead>
   <tbody>
-      <% @parlamentar_primary["Votacoes"]["Votacao"].each do |vote_primary| %>
-      <tr>
-        <td><%= vote_primary["Materia"]["DescricaoIdentificacao"] %></td>
-        <td><%= vote_primary["SiglaDescricaoVoto"] %></td>
-        <td><%= vote_primary["DescricaoVotacao"] %></td>
-        <% @parlamentar_secondary["Votacoes"]["Votacao"].each do |vote_secondary| %>
-          <% if !vote_secondary["CodigoSessaoVotacao"].nil? && vote_primary["CodigoSessaoVotacao"] == vote_secondary["CodigoSessaoVotacao"] %>
-            <td><%= vote_secondary["SiglaDescricaoVoto"]%></td>
-          <% end %>
-        <% end %>
-      </tr>
-      <% end %>
+
+
   </tbody>
+  <%= @senador_secondary_votes %>
 </table>

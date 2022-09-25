@@ -10,7 +10,7 @@ Vote.destroy_all
 Senator.destroy_all
 Bill.destroy_all
 puts 'seeding'
-
+time = Time.now
 i = 0
 
 unjsoned_parlamentares = URI.open("https://legis.senado.leg.br/dadosabertos/senador/lista/atual.json").read
@@ -46,4 +46,7 @@ unjsoned_parlamentares = URI.open("https://legis.senado.leg.br/dadosabertos/sena
   i += 1
 end
 
+
+finish_time = (Time.now - time).floor
 puts 'seeding finished'
+puts "finished in #{finish_time/60} minute(s) and #{finish_time%60} second(s)"

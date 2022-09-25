@@ -11,7 +11,19 @@
   </thead>
   <tbody>
 
-
+    <% @senador_primary_votes.each do |vote_primary| %>
+    <tr>
+      <td><%= vote_primary.bill.name %></td>
+      <td><%= vote_primary.choice %></td>
+      <td><%= vote_primary.bill.description %></td>
+      <% secondary_vote = Vote.joins(:senator).where('senate_key=? AND session_code=?', @senador_secondary.senate_key, vote_primary.session_code)
+      if secondary_vote.empty?
+      %>
+        <td><%= @senador_secondary.name %> não votou.</td>
+      <% else %>
+        <td><%= secondary_vote.first.choice %></td>
+      <% end %>
+    </tr>
+    <% end %>
   </tbody>
-  <%= @senador_secondary_votes %>
 </table>

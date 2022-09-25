@@ -6,37 +6,41 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 
-Senator.destroy_all
 Vote.destroy_all
+Senator.destroy_all
 Bill.destroy_all
 puts 'seeding'
 
 unjsoned_parlamentar = URI.open("https://legis.senado.leg.br/dadosabertos/senador/lista/atual.json").read
+
 @parlamentar = JSON.parse(unjsoned_parlamentar)["ListaParlamentarEmExercicio"]["Parlamentares"]["Parlamentar"].first["IdentificacaoParlamentar"]
 
-@senator = Senator.new
+@parlamentares = JSON.parse(unjsoned_parlamentar)["ListaParlamentarEmExercicio"]["Parlamentares"]["Parlamentar"]
 
-@senator.name = @parlamentar["NomeParlamentar"]
-@senator.party = @parlamentar["SiglaPartidoParlamentar"]
-@senator.senate_key = @parlamentar["CodigoParlamentar"]
+@parlamentares.each do |parlamentar|
+  @senator = Senator.new
 
-@senator.save!
+  @senator.name = parlamentar["IdentificacaoParlamentar"]["NomeParlamentar"]
+  @senator.party = parlamentar["IdentificacaoParlamentar"]["SiglaPartidoParlamentar"]
+  @senator.senate_key = parlamentar["IdentificacaoParlamentar"]["CodigoParlamentar"]
+  @senator.save!
 
-unjsoned_votes = URI.open("https://legis.senado.leg.br/dadosabertos/senador/#{@senator.senate_key}/votacoes.json?sigla=DEN").read
-@votes = JSON.parse(unjsoned_votes)["VotacaoParlamentar"]["Parlamentar"]["Votacoes"]["Votacao"].first
+  unjsoned_votes = URI.open("https://legis.senado.leg.br/dadosabertos/senador/#{@senator.senate_key}/votacoes.json?sigla=PEC").read
+  next if JSON.parse(unjsoned_votes)["VotacaoParlamentar"]["Parlamentar"].nil?
 
+  @votes = JSON.parse(unjsoned_votes)["VotacaoParlamentar"]["Parlamentar"]["Votacoes"]["Votacao"].first
 
-@bill = Bill.new
-@bill.name = @votes["Materia"]["DescricaoIdentificacao"]
-@bill.description = @votes["DescricaoVotacao"]
+  @bill = Bill.new
+  @bill.name = @votes["Materia"]["DescricaoIdentificacao"]
+  @bill.description = @votes["DescricaoVotacao"]
+  @bill.save!
 
-@bill.save!
-
-@vote = Vote.new
-@vote.session_code = @votes["CodigoSessaoVotacao"]
-@vote.choice = @votes["SiglaDescricaoVoto"]
-@vote.senator = @senator
-@vote.bill = @bill
-@vote.save!
+  @vote = Vote.new
+  @vote.session_code = @votes["CodigoSessaoVotacao"]
+  @vote.choice = @votes["SiglaDescricaoVoto"]
+  @vote.senator = @senator
+  @vote.bill = @bill
+  @vote.save!
+end
 
 puts 'seeding finished'

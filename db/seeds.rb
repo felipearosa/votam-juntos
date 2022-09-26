@@ -13,6 +13,8 @@ puts 'seeding'
 time = Time.now
 i = 1
 
+
+
 unjsoned_parlamentares = URI.open("https://legis.senado.leg.br/dadosabertos/senador/lista/atual.json").read
 
 @parlamentares = JSON.parse(unjsoned_parlamentares)["ListaParlamentarEmExercicio"]["Parlamentares"]["Parlamentar"]
@@ -38,6 +40,8 @@ unjsoned_parlamentares = URI.open("https://legis.senado.leg.br/dadosabertos/sena
     @bill = Bill.new
     @bill.name = votes["Materia"]["DescricaoIdentificacao"]
     @bill.description = votes["DescricaoVotacao"]
+    @bill.type = votes["Materia"]["Sigla"]
+    @bill.code = votes["Materia"]["Codigo"]
     @bill.save!
 
     @vote = Vote.new
@@ -51,6 +55,8 @@ unjsoned_parlamentares = URI.open("https://legis.senado.leg.br/dadosabertos/sena
       @bill = Bill.new
       @bill.name = vote["Materia"]["DescricaoIdentificacao"]
       @bill.description = vote["DescricaoVotacao"]
+      @bill.type = vote["Materia"]["Sigla"]
+      @bill.code = vote["Materia"]["Codigo"]
       @bill.save!
 
       @vote = Vote.new
@@ -69,104 +75,3 @@ end
 finish_time = (Time.now - time).floor
 puts 'seeding finished'
 puts "finished in #{finish_time/60} minute(s) and #{finish_time%60} second(s)"
-
-
-
-
-# @parlamentar = JSON.parse('{
-#   "IdentificacaoParlamentar": {
-#   "CodigoParlamentar": "4770",
-#   "CodigoPublicoNaLegAtual": "851",
-#   "NomeParlamentar": "Izalci Lucas",
-#   "NomeCompletoParlamentar": "Izalci Lucas Ferreira",
-#   "SexoParlamentar": "Masculino",
-#   "FormaTratamento": "Senador ",
-#   "UrlFotoParlamentar": "http://www.senado.leg.br/senadores/img/fotos-oficiais/senador4770.jpg",
-#   "UrlPaginaParlamentar": "http://www25.senado.leg.br/web/senadores/senador/-/perfil/4770",
-#   "EmailParlamentar": "sen.izalcilucas@senado.leg.br",
-#   "Telefones": {
-#   "Telefone": [
-#   {
-#   "NumeroTelefone": "33036049",
-#   "OrdemPublicacao": "1",
-#   "IndicadorFax": "Não"
-#   },
-#   {
-#   "NumeroTelefone": "33036050",
-#   "OrdemPublicacao": "2",
-#   "IndicadorFax": "Não"
-#   }
-#   ]
-#   },
-#   "SiglaPartidoParlamentar": "PSDB",
-#   "UfParlamentar": "DF",
-#   "MembroMesa": "Não",
-#   "MembroLideranca": "Sim"
-#   },
-#   "Mandato": {
-#   "CodigoMandato": "552",
-#   "UfParlamentar": "DF",
-#   "PrimeiraLegislaturaDoMandato": {
-#   "NumeroLegislatura": "56",
-#   "DataInicio": "2019-02-01",
-#   "DataFim": "2023-01-31"
-#   },
-#   "SegundaLegislaturaDoMandato": {
-#   "NumeroLegislatura": "57",
-#   "DataInicio": "2023-02-01",
-#   "DataFim": "2027-01-31"
-#   },
-#   "DescricaoParticipacao": "Titular",
-#   "Suplentes": {
-#   "Suplente": [
-#   {
-#   "DescricaoParticipacao": "1º Suplente",
-#   "CodigoParlamentar": "5968",
-#   "NomeParlamentar": "Luis Felipe Belmonte"
-#   },
-#   {
-#   "DescricaoParticipacao": "2º Suplente",
-#   "CodigoParlamentar": "5969",
-#   "NomeParlamentar": "Andre Filipe"
-#   }
-#   ]
-#   },
-#   "Exercicios": {
-#   "Exercicio": [
-#   {
-#   "CodigoExercicio": "2909",
-#   "DataInicio": "2019-02-01"
-#   }
-#   ]
-#   }
-#   }
-#   }')
-
-
-# @senator = Senator.new
-
-# @senator.senate_key = @parlamentar["IdentificacaoParlamentar"]["CodigoParlamentar"]
-# @senator.party = @parlamentar["IdentificacaoParlamentar"]["SiglaPartidoParlamentar"]
-# @senator.name = @parlamentar["IdentificacaoParlamentar"]["NomeParlamentar"]
-# @senator.save!
-
-# unjsoned_votes = URI.open("https://legis.senado.leg.br/dadosabertos/senador/4770/votacoes.json").read
-
-# JSON.parse(unjsoned_votes)["VotacaoParlamentar"]["Parlamentar"]["Votacoes"]["Votacao"].each do |vote|
-#   @bill = Bill.new
-#   @bill.name = vote["Materia"]["DescricaoIdentificacao"]
-#   @bill.description = vote["DescricaoVotacao"]
-#   @bill.save!
-
-#   puts "bill #{i} saved"
-#   @vote = Vote.new
-#   @vote.session_code = vote["CodigoSessaoVotacao"]
-#   @vote.choice = vote["SiglaDescricaoVoto"]
-#   @vote.senator = @senator
-#   @vote.bill = @bill
-#   @vote.save!
-#   puts "vote #{i} saved"
-#   i += 1
-# end
-
-# puts 'done'

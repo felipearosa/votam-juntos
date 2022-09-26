@@ -62,7 +62,7 @@ unjsoned_parlamentares = URI.open("https://legis.senado.leg.br/dadosabertos/sena
     end
   end
 
-  puts "Senator #{i} done"
+  puts "Senator #{i} - #{@senator.name} done"
   i += 1
 end
 

@@ -4,5 +4,8 @@
 
 import { application } from "./application"
 
+import ComparisonTableController from "./comparison_table_controller"
+application.register("comparison-table", ComparisonTableController)
+
 import HelloController from "./hello_controller"
 application.register("hello", HelloController)

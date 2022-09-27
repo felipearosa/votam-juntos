@@ -58,7 +58,7 @@ unjsoned_parlamentares = URI.open("https://legis.senado.leg.br/dadosabertos/sena
     @bill = Bill.new
     @bill.name = votes["Materia"]["DescricaoIdentificacao"]
     @bill.description = votes["DescricaoVotacao"]
-    @bill.type = votes["Materia"]["Sigla"]
+    @bill.kind = votes["Materia"]["Sigla"]
     @bill.code = votes["Materia"]["Codigo"]
     @bill.save!
 
@@ -77,7 +77,7 @@ unjsoned_parlamentares = URI.open("https://legis.senado.leg.br/dadosabertos/sena
       @bill = Bill.new
       @bill.name = vote["Materia"]["DescricaoIdentificacao"]
       @bill.description = vote["DescricaoVotacao"]
-      # @bill.type = vote["Materia"]["Sigla"]
+      @bill.kind = vote["Materia"]["Sigla"]
       @bill.code = vote["Materia"]["Codigo"]
       @bill.save!
 

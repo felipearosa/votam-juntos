@@ -20,12 +20,12 @@
         <% secondary_vote = Vote.joins(:senator).where('senate_key=? AND session_code=?', @senador_secondary.senate_key, vote_primary.session_code) %>
         <tr class="line-comparison" data-comparison-table-target="lineComparison">
           <td><%= vote_primary.bill.name %></td>
-          <td <%= 'data-comparison-table-target=voted' if vote_primary.choice == "Sim" || vote_primary.choice == "Não" %>><%= vote_primary.choice %></td>
+          <td class="primary-choice" <%= 'data-comparison-table-target=votedPrimary' if vote_primary.choice == "Sim" || vote_primary.choice == "Não" %>><%= vote_primary.choice %></td>
           <td><%= vote_primary.bill.description %></td>
           <% if secondary_vote.empty? %>
-            <td class="no-record" data-comparison-table-target="noRecord"><%= @senador_secondary.name %> não tem registro de voto.</td>
+            <td class="secondary-choice"><%= @senador_secondary.name %> não tem registro de voto.</td>
           <% else %>
-            <td><%= secondary_vote.first.choice %></td>
+            <td class="secondary-choice" <%= 'data-comparison-table-target=votedSecondary' if (secondary_vote.first.choice == "Sim" || secondary_vote.first.choice == "Não") && (vote_primary.choice == "Sim" || vote_primary.choice == "Não") %>><%= secondary_vote.first.choice %></td>
           <% end %>
         </tr>
       <% end %>

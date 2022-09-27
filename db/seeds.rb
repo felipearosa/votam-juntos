@@ -13,25 +13,26 @@ puts 'seeding'
 time = Time.now
 i = 1
 
-def create_bill_votes(vote)
-  @bill = Bill.new
-  @bill.name = vote["Materia"]["DescricaoIdentificacao"]
-  @bill.description = vote["DescricaoVotacao"]
-  @bill.type = vote["Materia"]["Sigla"]
-  @bill.code = vote["Materia"]["Codigo"]
-  @bill.save!
+# def create_bill_votes(vote, bill_save, vote_save, senator_save)
+#   bill_save = Bill.new
+#   bill_save.name = vote["Materia"]["DescricaoIdentificacao"]
+#   bill_save.description = vote["DescricaoVotacao"]
+#   bill_save.type = vote["Materia"]["Sigla"]
+#   bill_save.code = vote["Materia"]["Codigo"]
+#   bill_save.save!
 
-  @vote = Vote.new
-  @vote.session_code = vote["CodigoSessaoVotacao"]
-  @vote.choice = vote["SiglaDescricaoVoto"]
-  @vote.senator = @senator
-  @vote.bill = @bill
-  @vote.save!
-end
+#   vote_save = Vote.new
+#   vote_save.session_code = vote["CodigoSessaoVotacao"]
+#   vote_save.choice = vote["SiglaDescricaoVoto"]
+#   vote_save.senator = @senator
+#   vote_save.bill = bill_save
+#   vote_save.save!
+# end
 
 unjsoned_parlamentares = URI.open("https://legis.senado.leg.br/dadosabertos/senador/lista/atual.json").read
 
-@parlamentares = JSON.parse(unjsoned_parlamentares)["ListaParlamentarEmExercicio"]["Parlamentares"]["Parlamentar"]
+# test
+@parlamentares = JSON.parse(unjsoned_parlamentares)["ListaParlamentarEmExercicio"]["Parlamentares"]["Parlamentar"].first(5)
 
 @parlamentares.each do |parlamentar|
   puts "Senator #{i} starting"
@@ -48,13 +49,44 @@ unjsoned_parlamentares = URI.open("https://legis.senado.leg.br/dadosabertos/sena
   unjsoned_votes = URI.open("https://legis.senado.leg.br/dadosabertos/senador/#{@senator.senate_key}/votacoes.json").read
   next if JSON.parse(unjsoned_votes)["VotacaoParlamentar"]["Parlamentar"].nil?
 
-  votes = JSON.parse(unjsoned_votes)["VotacaoParlamentar"]["Parlamentar"]["Votacoes"]["Votacao"]
+  votes = JSON.parse(unjsoned_votes)["VotacaoParlamentar"]["Parlamentar"]["Votacoes"]["Votacao"].first(5)
+
 
   if votes.instance_of? Hash
-    create_bill_votes(votes)
+    # next if votes["Materia"]["Sigla"] == "MSF" || votes["Materia"]["Sigla"] == "OFS" || votes["Materia"]["Sigla"] == "MSF"
+
+    @bill = Bill.new
+    @bill.name = votes["Materia"]["DescricaoIdentificacao"]
+    @bill.description = votes["DescricaoVotacao"]
+    @bill.type = votes["Materia"]["Sigla"]
+    @bill.code = votes["Materia"]["Codigo"]
+    @bill.save!
+
+    @vote = Vote.new
+    @vote.session_code = votes["CodigoSessaoVotacao"]
+    @vote.choice = votes["SiglaDescricaoVoto"]
+    @vote.senator = @senator
+    @vote.bill = @bill
+    @vote.save!
+
+
   else
     votes.each do |vote|
-      create_bill_votes(vote)
+      # next if vote["Materia"]["Sigla"] == "MSF" || vote["Materia"]["Sigla"] == "OFS" || vote["Materia"]["Sigla"] == "MSF"
+
+      @bill = Bill.new
+      @bill.name = vote["Materia"]["DescricaoIdentificacao"]
+      @bill.description = vote["DescricaoVotacao"]
+      # @bill.type = vote["Materia"]["Sigla"]
+      @bill.code = vote["Materia"]["Codigo"]
+      @bill.save!
+
+      @vote = Vote.new
+      @vote.session_code = vote["CodigoSessaoVotacao"]
+      @vote.choice = vote["SiglaDescricaoVoto"]
+      @vote.senator = @senator
+      @vote.bill = @bill
+      @vote.save!
     end
   end
 

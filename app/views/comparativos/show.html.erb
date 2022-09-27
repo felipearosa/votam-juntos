@@ -1,29 +1,34 @@
-<h1>test</h1>
+<div class="container">
+  <h1>test</h1>
 
-<table>
-  <thead>
-    <tr>
-      <td>Matéria</td>
-      <td>Voto</td>
-      <td>Descrição da Votação</td>
-      <%# <td>Segundo</td> %>
-    </tr>
-  </thead>
-  <tbody>
+  <div class="contain">
+    <p></p>
+  </div>
 
-    <% @senador_primary_votes.each do |vote_primary| %>
-    <tr>
-      <td><%= vote_primary.bill.name %></td>
-      <td><%= vote_primary.choice %></td>
-      <td><%= vote_primary.bill.description %></td>
-      <% secondary_vote = Vote.joins(:senator).where('senate_key=? AND session_code=?', @senador_secondary.senate_key, vote_primary.session_code)
-      if secondary_vote.empty?
-      %>
-        <td><%= @senador_secondary.name %> não votou.</td>
-      <% else %>
-        <td><%= secondary_vote.first.choice %></td>
+  <table>
+    <thead>
+      <tr>
+        <td>Matéria</td>
+        <td>Voto</td>
+        <td>Descrição da Votação</td>
+        <%# <td>Segundo</td> %>
+      </tr>
+    </thead>
+    <tbody>
+
+      <% @senador_primary_votes.each do |vote_primary| %>
+        <% secondary_vote = Vote.joins(:senator).where('senate_key=? AND session_code=?', @senador_secondary.senate_key, vote_primary.session_code) %>
+        <tr class="line-comparison<%= ' voted' if vote_primary.choice == "Sim" || vote_primary.choice == "Não" %>">
+          <td><%= vote_primary.bill.name %></td>
+          <td><%= vote_primary.choice %></td>
+          <td><%= vote_primary.bill.description %></td>
+          <% if secondary_vote.empty? %>
+            <td class="no-record"><%= @senador_secondary.name %> não tem registro de voto.</td>
+          <% else %>
+            <td><%= secondary_vote.first.choice %></td>
+          <% end %>
+        </tr>
       <% end %>
-    </tr>
-    <% end %>
-  </tbody>
-</table>
+    </tbody>
+  </table>
+</div>

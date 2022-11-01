@@ -1,0 +1,21 @@
+.hero-banner{
+  height: 90vh;
+  background-color: #000000;
+  position: relative;
+  top: 0;
+  width: 100%
+}
+
+.hero-text {
+  position: absolute;
+  bottom: 20vh;
+  color:#ffffff
+}
+
+.hero-text > h1 {
+  font-weight: 700;
+}
+
+.hero-text > h2 {
+  font-weight: 100;
+}

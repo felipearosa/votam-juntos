@@ -13,13 +13,20 @@ puts 'seeding'
 time = Time.now
 i = 1
 
+# 38941
+# 101405
+
 def create_bill_votes(vote, bill_save, vote_save, senator_save)
-  bill_save = Bill.new
-  bill_save.name = vote["Materia"]["DescricaoIdentificacao"]
-  bill_save.description = vote["DescricaoVotacao"]
-  bill_save.kind = vote["Materia"]["Sigla"]
-  bill_save.code = vote["Materia"]["Codigo"]
-  bill_save.save!
+  if Bill.where(code: vote["Materia"]["Codigo"].to_s).empty?
+    bill_save = Bill.new
+    bill_save.name = vote["Materia"]["DescricaoIdentificacao"]
+    bill_save.description = vote["DescricaoVotacao"]
+    bill_save.kind = vote["Materia"]["Sigla"]
+    bill_save.code = vote["Materia"]["Codigo"]
+    bill_save.save!
+  else
+    bill_save = Bill.where(code: vote["Materia"]["Codigo"].to_s).first
+  end
 
   vote_save = Vote.new
   vote_save.session_code = vote["CodigoSessaoVotacao"]

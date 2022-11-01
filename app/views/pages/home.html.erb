@@ -1,4 +1,35 @@
-<h1>Pages#home</h1>
+<header>
+  <div class="hero-banner">
+    <div class="container">
+      <div class="hero-text">
+        <h1>Esse é o título do site</h1>
+        <h2>Esse é o subtítulo do site. Esse é o subtítulo do site.</h2>
+      </div>
+    </div>
+  </div>
+</header>
+<section>
+  <div class="container py-5">
+    <div class="row">
+      <div class="col-sm-12 col-md-4">
+        <div class="flip-card">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <img src="img_avatar.png" alt="Avatar" style="width:300px;height:300px;">
+            </div>
+            <div class="flip-card-back">
+              <h1>John Doe</h1>
+              <p>Architect & Engineer</p>
+              <p>We love that guy</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-4">yoooo</div>
+      <div class="col-4">yoooo</div>
+    </div>
+  </div>
+</section>
 <p>Find me in app/views/pages/home.html.erb</p>
 <%= form_with url: "/comparativos", method: :get do |form| %>
   <%= form.select :senador1,  @senadores.map { |parlamentar| ["#{parlamentar[:name]} - #{parlamentar[:party]}", parlamentar[:senate_key]]} %>

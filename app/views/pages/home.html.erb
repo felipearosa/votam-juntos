@@ -9,55 +9,7 @@
   </div>
 </header>
 <section>
-  <div class="container py-5">
-    <div class="row justify-content-center">
-      <div class="col-sm-4 col-md-4 card-col">
-        <div class="flip-card">
-          <div class="flip-card-inner">
-            <div class="flip-card-front">
-              <img src="<%= image_path('fast-track.png') %>" alt="senador" class="image-icon">
-              <h3 class="card-title">Senadores</h3>
-            </div>
-            <div class="flip-card-back">
-              <h3 class="card-title">Senadores</h3>
-              <h5>Veja como votou cada senador em cada matéria</h5>
-              <div class="btn btn-dark btn-text">Saiba mais</div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-4 col-md-4 card-col">
-        <div class="flip-card">
-          <div class="flip-card-inner">
-            <div class="flip-card-front">
-              <img src="<%= image_path('document.png') %>" alt="senador" class="image-icon">
-              <h3 class="card-title">Senadores</h3>
-            </div>
-            <div class="flip-card-back">
-              <h1>John Doe</h1>
-              <p>Architect & Engineer</p>
-              <p>We love that guy</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-4 col-md-4 card-col">
-        <div class="flip-card">
-          <div class="flip-card-inner">
-            <div class="flip-card-front">
-              <img src="<%= image_path('compare.png') %>" alt="senador" class="image-icon">
-              <h3 class="card-title">Senadores</h3>
-            </div>
-            <div class="flip-card-back">
-              <h1>John Doe</h1>
-              <p>Architect & Engineer</p>
-              <p>We love that guy</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <%= render 'cards' %>
 </section>
 <p>Find me in app/views/pages/home.html.erb</p>
 <%= form_with url: "/comparativos", method: :get do |form| %>

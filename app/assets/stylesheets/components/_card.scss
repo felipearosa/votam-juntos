@@ -1,9 +1,8 @@
 .flip-card {
   background-color: transparent;
-  width: 300px;
-  height: 200px;
-  border: 1px solid #f1f1f1;
+  height: 375px;
   perspective: 1000px;
+  margin: auto;
 }
 
 .flip-card-inner {
@@ -11,7 +10,7 @@
   width: 100%;
   height: 100%;
   text-align: center;
-  transition: transform 0.8s;
+  transition: transform 0.5s;
   transform-style: preserve-3d;
 }
 
@@ -20,13 +19,14 @@
 }
 
 .flip-card-front, .flip-card-back {
-  background: linear-gradient(to bottom,  #ffffff 0%,#ffffff 50%,#989898 50%,#989898 100%);
+  background: linear-gradient(to bottom,  #eeeeee 0%,#eeeeee 60%,#ffffff 60%,#ffffff 100%);
   position: absolute;
   width: 100%;
   height: 100%;
   -webkit-backface-visibility: hidden; /* Safari */
   backface-visibility: hidden;
   border-radius: 5px;
+  box-shadow: 2px 2px 15px 2px #00000010
 }
 
 .flip-card-front {
@@ -36,6 +36,41 @@
 
 .flip-card-back {
   background-color: dodgerblue;
-  color: white;
+  color: #1a1a1a;
   transform: rotateY(180deg);
+}
+
+.flip-card-back > h3 {
+  margin:75px 0 30px 0;
+}
+
+.flip-card-back > h5 {
+  margin:30px 0;
+  padding: 0 30px;
+  max-width: 400px;
+}
+
+.image-icon{
+  margin-top: 150px;
+}
+
+.card-title{
+  margin-top: 10px;
+}
+
+.btn-text{
+  font-size: 20px;
+  border-radius: 5px;
+  margin-top: 60px;
+}
+
+@media (max-width: 767px){
+  .card-col{
+    padding-bottom: 20px;
+  }
+
+  .card-col:last-child{
+    padding-bottom: 0px;
+  }
+
 }

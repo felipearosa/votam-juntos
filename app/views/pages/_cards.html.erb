@@ -46,7 +46,7 @@
                 </div>
                 <div class="form-group p-2">
                   <%= form.select :senador2,  @senadores.map { |parlamentar| ["#{parlamentar[:name]} - #{parlamentar[:party]}", parlamentar[:senate_key]]}, {}, { class: "form-control" }  %>
-                  <%= form.submit "Procurar", {class: "btn btn-dark btn-text"} %>
+                  <%= form.submit "Procurar", {class: "btn btn-dark btn-select-text"} %>
                 </div>
               <% end %>
             </div>

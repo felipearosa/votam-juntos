@@ -1,6 +1,6 @@
 .flip-card {
   background-color: transparent;
-  height: 375px;
+  height: 400px;
   perspective: 1000px;
   margin: auto;
 }
@@ -55,7 +55,13 @@
 }
 
 .card-title{
-  margin-top: 10px;
+  margin-top: 20px;
+}
+
+.btn-select-text{
+  font-size: 20px;
+  border-radius: 5px;
+  margin-top: 20px;
 }
 
 .btn-text{

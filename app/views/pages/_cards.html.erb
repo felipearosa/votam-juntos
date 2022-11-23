@@ -1,57 +1,64 @@
 <div class="container py-5">
-    <div class="row justify-content-center">
-      <div class="col-sm-4 col-md-4 card-col">
-        <div class="flip-card">
-          <div class="flip-card-inner">
-            <div class="flip-card-front">
-              <img src="<%= image_path('fast-track.png') %>" alt="senador" class="image-icon">
-              <h3 class="card-title">Senadores</h3>
-            </div>
-            <div class="flip-card-back">
-              <h3 class="card-title">Senadores</h3>
-              <h5>Veja como votou cada senador em cada matéria</h5>
-              <div class="btn btn-dark btn-text">Saiba mais</div>
-            </div>
+  <div class="row justify-content-center">
+    <div class="col-sm-4 col-md-4 card-col">
+      <div class="flip-card">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <img src="<%= image_path('fast-track.png') %>" alt="senador" class="image-icon">
+            <h3 class="card-title">Senadores</h3>
+          </div>
+          <div class="flip-card-back">
+            <h3 class="card-title">Senadores</h3>
+            <h5>Veja como votou cada senador em cada matéria</h5>
+            <%= form_with url: "/senadores", method: :get do |form| %>
+              <div class="form-group p-2">
+                <%= form.select :senador,  @senadores.map { |parlamentar| ["#{parlamentar[:name]} - #{parlamentar[:party]}", parlamentar[:senate_key]]}, {}, { class: "form-control" } %>
+              </div>
+              <div class="form-group p-2">
+                <%= form.submit "Procurar", {class: "btn btn-dark btn-select-text"} %>
+              </div>
+            <% end %>
           </div>
         </div>
       </div>
-      <div class="col-sm-4 col-md-4 card-col">
-        <div class="flip-card">
-          <div class="flip-card-inner">
-            <div class="flip-card-front">
-              <img src="<%= image_path('document.png') %>" alt="senador" class="image-icon">
-              <h3 class="card-title">Matérias</h3>
-            </div>
-            <div class="flip-card-back">
-              <h3 class="card-title">Matérias</h3>
-              <h5>Confira o voto de cada parlamentar por matéria</h5>
-              <div class="btn btn-dark btn-text">Saiba mais</div>
-            </div>
+    </div>
+    <div class="col-sm-4 col-md-4 card-col">
+      <div class="flip-card">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <img src="<%= image_path('document.png') %>" alt="senador" class="image-icon">
+            <h3 class="card-title">Matérias</h3>
+          </div>
+          <div class="flip-card-back">
+            <h3 class="card-title">Matérias</h3>
+            <h5>Confira o voto de cada parlamentar por matéria</h5>
+            <div class="btn btn-dark btn-text">Saiba mais</div>
           </div>
         </div>
       </div>
-      <div class="col-sm-4 col-md-4 card-col">
-        <div class="flip-card">
-          <div class="flip-card-inner">
-            <div class="flip-card-front">
-              <img src="<%= image_path('compare.png') %>" alt="senador" class="image-icon">
-              <h3 class="card-title">Comparativo</h3>
-            </div>
-            <div class="flip-card-back">
-              <h3 class="card-title">Comparativo</h3>
-              <h5>Saiba quantas vezes dois deputados votaram juntos</h5>
-              <%= form_with url: "/comparativos", method: :get do |form| %>
-                <div class="form-group p-2">
-                  <%= form.select :senador1,  @senadores.map { |parlamentar| ["#{parlamentar[:name]} - #{parlamentar[:party]}", parlamentar[:senate_key]]}, {}, { class: "form-control" } %>
-                </div>
-                <div class="form-group p-2">
-                  <%= form.select :senador2,  @senadores.map { |parlamentar| ["#{parlamentar[:name]} - #{parlamentar[:party]}", parlamentar[:senate_key]]}, {}, { class: "form-control" }  %>
-                  <%= form.submit "Procurar", {class: "btn btn-dark btn-select-text"} %>
-                </div>
-              <% end %>
-            </div>
+    </div>
+    <div class="col-sm-4 col-md-4 card-col">
+      <div class="flip-card">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <img src="<%= image_path('compare.png') %>" alt="senador" class="image-icon">
+            <h3 class="card-title">Comparativo</h3>
+          </div>
+          <div class="flip-card-back">
+            <h3 class="card-title">Comparativo</h3>
+            <h5>Saiba quantas vezes dois deputados votaram juntos</h5>
+            <%= form_with url: "/comparativos", method: :get do |form| %>
+              <div class="form-group p-2">
+                <%= form.select :senador1,  @senadores.map { |parlamentar| ["#{parlamentar[:name]} - #{parlamentar[:party]}", parlamentar[:senate_key]]}, {}, { class: "form-control" } %>
+              </div>
+              <div class="form-group p-2">
+                <%= form.select :senador2,  @senadores.map { |parlamentar| ["#{parlamentar[:name]} - #{parlamentar[:party]}", parlamentar[:senate_key]]}, {}, { class: "form-control" }  %>
+                <%= form.submit "Procurar", {class: "btn btn-dark btn-select-text"} %>
+              </div>
+            <% end %>
           </div>
         </div>
       </div>
     </div>
   </div>
+</div>

@@ -1,5 +1,5 @@
 class BillsController < ApplicationController
   def show
-    @bills = Bill.all
+    @bill = Bill.find(params[:materia])
   end
 end

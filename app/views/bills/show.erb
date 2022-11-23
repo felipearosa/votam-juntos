@@ -1,0 +1,23 @@
+<div class="container mt-5">
+  <h2><%= @bill.name %></h2>
+    <p><%= @bill.description %></p>
+
+    <table data-controller="comparison-table">
+    <thead>
+      <tr>
+        <td>Senador</td>
+        <td>Partido</td>
+        <td>Voto</td>
+      </tr>
+    </thead>
+    <tbody>
+      <% @bill.votes.each do |voto| %>
+          <tr>
+            <td><%= voto.senator.name %></td>
+            <td class="primary-choice"><%= voto.senator.party %></td>
+            <td><%= voto.choice %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+</div>

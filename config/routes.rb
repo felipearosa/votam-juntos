@@ -5,5 +5,7 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "articles#index"
   get '/comparativos', to: 'comparativos#show'
-  post '/comparativos', to: 'comparativos#create'
+  get '/senadores', to: 'senators#show'
+  get '/materias', to: 'bills#show'
+
 end

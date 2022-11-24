@@ -8,4 +8,5 @@ Rails.application.routes.draw do
   get '/senadores', to: 'senators#show'
   get '/materias', to: 'bills#show'
 
+
 end

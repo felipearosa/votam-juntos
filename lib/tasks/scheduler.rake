@@ -22,7 +22,7 @@ end
 
 desc "This task is called by the Heroku scheduler add-on"
 task :update_feed => :environment do
-  if Date.today.wday.zero?
+  if Date.today.wday === 4
     puts 'deleting'
     time = Time.now
     Vote.destroy_all

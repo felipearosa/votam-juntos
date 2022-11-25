@@ -6,15 +6,13 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 
+puts 'deleting'
+time = Time.now
 Vote.destroy_all
 Senator.destroy_all
 Bill.destroy_all
 puts 'seeding'
-time = Time.now
 i = 1
-
-# 38941
-# 101405
 
 def create_bill_votes(vote, bill_save, vote_save, senator_save)
   if Bill.where(code: vote["Materia"]["Codigo"].to_s).empty?
@@ -31,7 +29,7 @@ def create_bill_votes(vote, bill_save, vote_save, senator_save)
   vote_save = Vote.new
   vote_save.session_code = vote["CodigoSessaoVotacao"]
   vote_save.choice = vote["SiglaDescricaoVoto"]
-  vote_save.senator = @senator
+  vote_save.senator = senator_save
   vote_save.bill = bill_save
   vote_save.save!
 end
@@ -58,42 +56,15 @@ unjsoned_parlamentares = URI.open("https://legis.senado.leg.br/dadosabertos/sena
 
   votes = JSON.parse(unjsoned_votes)["VotacaoParlamentar"]["Parlamentar"]["Votacoes"]["Votacao"]
 
-
   if votes.instance_of? Hash
     next if votes["Materia"]["Sigla"] == "MSF" || votes["Materia"]["Sigla"] == "OFS" || votes["Materia"]["Sigla"] == "MSF"
+
     create_bill_votes(votes, @bill, @vote, @senator)
-    # @bill = Bill.new
-    # @bill.name = votes["Materia"]["DescricaoIdentificacao"]
-    # @bill.description = votes["DescricaoVotacao"]
-    # @bill.kind = votes["Materia"]["Sigla"]
-    # @bill.code = votes["Materia"]["Codigo"]
-    # @bill.save!
-
-    # @vote = Vote.new
-    # @vote.session_code = votes["CodigoSessaoVotacao"]
-    # @vote.choice = votes["SiglaDescricaoVoto"]
-    # @vote.senator = @senator
-    # @vote.bill = @bill
-    # @vote.save!
-
-
   else
     votes.each do |vote|
       next if vote["Materia"]["Sigla"] == "MSF" || vote["Materia"]["Sigla"] == "OFS" || vote["Materia"]["Sigla"] == "MSF"
-      create_bill_votes(vote, @bill, @vote, @senator)
-      # @bill = Bill.new
-      # @bill.name = vote["Materia"]["DescricaoIdentificacao"]
-      # @bill.description = vote["DescricaoVotacao"]
-      # @bill.kind = vote["Materia"]["Sigla"]
-      # @bill.code = vote["Materia"]["Codigo"]
-      # @bill.save!
 
-      # @vote = Vote.new
-      # @vote.session_code = vote["CodigoSessaoVotacao"]
-      # @vote.choice = vote["SiglaDescricaoVoto"]
-      # @vote.senator = @senator
-      # @vote.bill = @bill
-      # @vote.save!
+      create_bill_votes(vote, @bill, @vote, @senator)
     end
   end
 

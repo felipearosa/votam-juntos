@@ -8,6 +8,7 @@
         <td>Senador</td>
         <td>Partido</td>
         <td>Voto</td>
+        <td>Descrição</td>
       </tr>
     </thead>
     <tbody>
@@ -16,6 +17,8 @@
             <td><%= voto.senator.name %></td>
             <td class="primary-choice"><%= voto.senator.party %></td>
             <td><%= voto.choice %></td>
+            <td><%= voto.description %></td>
+          </tr>
           </tr>
         <% end %>
       </tbody>

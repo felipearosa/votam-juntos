@@ -1,8 +1,7 @@
 <div class="container mt-5">
   <h2><%= @bill.name %></h2>
-    <p><%= @bill.description %></p>
-
-    <table data-controller="comparison-table">
+  <p><%= @bill.description %></p>
+  <table data-controller="comparison-table">
     <thead>
       <tr>
         <td>Senador</td>
@@ -13,14 +12,19 @@
     </thead>
     <tbody>
       <% @bill.votes.each do |voto| %>
-          <tr>
-            <td><%= voto.senator.name %></td>
-            <td class="primary-choice"><%= voto.senator.party %></td>
-            <td><%= voto.choice %></td>
-            <td><%= voto.description %></td>
-          </tr>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
+        <tr>
+          <td><%= voto.senator.name %></td>
+          <td class="primary-choice"><%= voto.senator.party %></td>
+          <td><%= voto.choice %></td>
+          <td class="session-description">
+            Mais
+            <div class="position">
+              <div class="box--description"><%= voto.description %></div>
+            </div>
+          </td>
+        </tr>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
 </div>

@@ -1,0 +1,21 @@
+.inactive {
+  visibility: hidden;
+  height: 0;
+}
+
+.session-description {
+  position: relative;
+}
+
+.box--description {
+  border-radius: 10px;
+  box-shadow: 1px 1px 6px 1px #00000020;
+  padding: 15px;
+  max-width: 350px;
+}
+
+.position {
+  position: relative;
+  top: -30px;
+  left: 15px;
+}

@@ -11,20 +11,45 @@
       </tr>
     </thead>
     <tbody>
-      <% @bill.votes.each do |voto| %>
-        <tr>
-          <td><%= voto.senator.name %></td>
-          <td class="primary-choice"><%= voto.senator.party %></td>
-          <td><%= voto.choice %></td>
-          <td class="session-description">
-            Mais
-            <div class="position">
-              <div class="box--description"><%= voto.description %></div>
-            </div>
-          </td>
-        </tr>
+      <tr>
+        <td><%= @bill.votes[0].senator.name %></td>
+        <td class="primary-choice"><%= @bill.votes[0].senator.party %></td>
+        <td><%= @bill.votes[0].choice %></td>
+        <td class="session-description">
+          Mais
+          <div class="position">
+            <div class="box--description"><%= @bill.votes[0].description %></div>
+          </div>
+        </td>
       </tr>
-    <% end %>
+    </tr>
   </tbody>
+</table>
+<p>-------------------</p>
+<table data-controller="comparison-table">
+  <thead>
+    <tr>
+      <td>Senador</td>
+      <td>Partido</td>
+      <td>Voto</td>
+      <td>Descrição</td>
+    </tr>
+  </thead>
+  <tbody>
+    <% @bill.votes.each do |voto| %>
+      <tr>
+        <td><%= voto.senator.name %></td>
+        <td class="primary-choice"><%= voto.senator.party %></td>
+        <td><%= voto.choice %></td>
+        <td class="session-description">
+          Mais
+          <div class="position">
+            <div class="box--description"><%= voto.description %></div>
+          </div>
+        </td>
+      </tr>
+    </tr>
+  <% end %>
+</tbody>
 </table>
 </div>

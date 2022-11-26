@@ -25,10 +25,10 @@ def create_bill_votes(vote, bill_save, vote_save, senator_save)
   else
     bill_save = Bill.where(code: vote["Materia"]["Codigo"].to_s).first
   end
-
   vote_save = Vote.new
   vote_save.session_code = vote["CodigoSessaoVotacao"]
   vote_save.choice = vote["SiglaDescricaoVoto"]
+  vote_save.description = vote["DescricaoVotacao"]
   vote_save.senator = senator_save
   vote_save.bill = bill_save
   vote_save.save!

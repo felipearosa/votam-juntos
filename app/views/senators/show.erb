@@ -1,21 +1,37 @@
 <div class="container mt-5">
   <h2>Votos do <%= @senador.name %></h2>
-  <table data-controller="comparison-table">
+  <table data-controller="senator-table">
     <thead>
       <tr>
         <td>Matéria</td>
-        <td>Voto</td>
+        <td>Descrição da Matéria</td>
         <td>Descrição da Votação</td>
+        <td>Voto</td>
       </tr>
     </thead>
     <tbody>
       <% @senador.votes.each do |voto| %>
-          <tr>
-            <td><%= voto.bill.name %></td>
-            <td class="primary-choice"><%= voto.choice %></td>
-            <td><%= voto.bill.description %></td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
+        <tr>
+          <td><%= voto.bill.name %></td>
+          <td class="session-description" data-senator-table-target="descriptionCell">
+            <div class="hover-text">
+              Mais
+            </div>
+            <div class="container-description inactive" data-senator-table-target="voteDescription">
+              <div class="box--description"><%= voto.bill.description %></div>
+            </div>
+          </td>
+          <td class="session-description" data-senator-table-target="descriptionCell">
+            <div class="hover-text">
+              Mais
+            </div>
+            <div class="container-description inactive" data-senator-table-target="voteDescription">
+              <div class="box--description"><%= voto.description %></div>
+            </div>
+          </td>
+          <td class="primary-choice"><%= voto.choice %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 </div>

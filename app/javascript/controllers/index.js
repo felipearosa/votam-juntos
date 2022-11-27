@@ -12,3 +12,6 @@ application.register("comparison-table", ComparisonTableController)
 
 import HelloController from "./hello_controller"
 application.register("hello", HelloController)
+
+import SenatorTableController from "./senator_table_controller"
+application.register("senator-table", SenatorTableController)

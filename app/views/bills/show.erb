@@ -1,7 +1,7 @@
 <div class="container mt-5">
   <h2><%= @bill.name %></h2>
   <p><%= @bill.description %></p>
-  <table data-controller="comparison-table">
+  <table data-controller="bills-table">
     <thead>
       <tr>
         <td>Senador</td>
@@ -15,9 +15,9 @@
         <td><%= @bill.votes[0].senator.name %></td>
         <td class="primary-choice"><%= @bill.votes[0].senator.party %></td>
         <td><%= @bill.votes[0].choice %></td>
-        <td class="session-description">
+        <td class="session-description" data-bills-table-target="hoverText">
           Mais
-          <div class="position inactive">
+          <div class="position inactive" data-bills-table-target="voteDescription">
             <div class="box--description"><%= @bill.votes[0].description %></div>
           </div>
         </td>
@@ -26,7 +26,7 @@
   </tbody>
 </table>
 <p>-------------------</p>
-<table data-controller="comparison-table">
+<table data-controller="bills-table">
   <thead>
     <tr>
       <td>Senador</td>
@@ -41,7 +41,7 @@
         <td><%= voto.senator.name %></td>
         <td class="primary-choice"><%= voto.senator.party %></td>
         <td><%= voto.choice %></td>
-        <td class="session-description">
+        <td class="session-description" data-bills-table-target="hoverText>
           Mais
           <div class="position">
             <div class="box--description"><%= voto.description %></div>

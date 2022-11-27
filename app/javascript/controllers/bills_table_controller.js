@@ -5,6 +5,16 @@ export default class extends Controller {
   static targets = ["hoverText","voteDescription"]
 
   connect() {
-    console.log(this.hoverTextTargets)
+    this.hoverTextTargets.forEach(hoverText => {
+      const voteDescription = hoverText.querySelector('.position');
+
+      hoverText.addEventListener('mouseover', () => {
+        voteDescription.classList.remove("inactive")
+      })
+
+      hoverText.addEventListener('mouseout', () => {
+        voteDescription.classList.add("inactive")
+      })
+    });
   }
 }

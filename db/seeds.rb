@@ -18,7 +18,7 @@ def create_bill_votes(vote, bill_save, vote_save, senator_save)
   if Bill.where(code: vote["Materia"]["Codigo"].to_s).empty?
     bill_save = Bill.new
     bill_save.name = vote["Materia"]["DescricaoIdentificacao"]
-    bill_save.description = vote["DescricaoVotacao"]
+    bill_save.description = vote["Materia"]["Ementa"]
     bill_save.kind = vote["Materia"]["Sigla"]
     bill_save.code = vote["Materia"]["Codigo"]
     bill_save.save!

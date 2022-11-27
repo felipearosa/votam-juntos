@@ -1,14 +1,16 @@
 import { Controller } from "@hotwired/stimulus"
-
+import { showMoreBox } from "../helpers/show_more_box";
 // Connects to data-controller="comparison-table"
 export default class extends Controller {
-  static targets = ["lineComparison", "votedPrimary","votedSecondary", "noRecord", "votedTogether"]
+  static targets = ["lineComparison", "votedPrimary","votedSecondary", "noRecord", "votedTogether", "descriptionCell","voteDescription"]
 
   connect() {
     this.#checkSameness(this.lineComparisonTargets);
 
     const votedSame = this.#countAll(this.lineComparisonTargets, 'same-choice');
     const votedDiff = this.#countAll(this.lineComparisonTargets, 'diff-choice');
+
+    showMoreBox(this.descriptionCellTargets);
 
     console.log(votedSame);
     console.log(votedDiff);

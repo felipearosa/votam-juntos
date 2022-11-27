@@ -7,15 +7,24 @@
   position: relative;
 }
 
+.hover-text {
+  cursor: pointer;
+}
+
+.hover-text-active{
+  font-weight: 700;
+}
+
 .box--description {
   border-radius: 10px;
   box-shadow: 1px 1px 6px 1px #00000020;
   padding: 15px;
   max-width: 350px;
   background-color: #ffffff;
+  color: #000000;
 }
 
-.position {
+.container-description {
   z-index: 1;
   position: relative;
   top: -30px;

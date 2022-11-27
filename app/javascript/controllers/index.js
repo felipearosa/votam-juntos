@@ -4,11 +4,14 @@
 
 import { application } from "./application"
 
+import BillsTableController from "./bills_table_controller"
+application.register("bills-table", BillsTableController)
+
 import ComparisonTableController from "./comparison_table_controller"
 application.register("comparison-table", ComparisonTableController)
 
-import DescriptionController from "./description_controller"
-application.register("description", DescriptionController)
-
 import HelloController from "./hello_controller"
 application.register("hello", HelloController)
+
+import SenatorTableController from "./senator_table_controller"
+application.register("senator-table", SenatorTableController)

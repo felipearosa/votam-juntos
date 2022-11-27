@@ -11,47 +11,22 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td><%= @bill.votes[0].senator.name %></td>
-        <td class="primary-choice"><%= @bill.votes[0].senator.party %></td>
-        <td><%= @bill.votes[0].choice %></td>
-        <td class="session-description" data-bills-table-target="hoverText">
-          Mais
-          <div class="position inactive" data-bills-table-target="voteDescription">
-            <div class="box--description"><%= @bill.votes[0].description %></div>
-          </div>
-        </td>
+      <% @bill.votes.each do |voto| %>
+        <tr>
+          <td><%= voto.senator.name %></td>
+          <td class="primary-choice"><%= voto.senator.party %></td>
+          <td><%= voto.choice %></td>
+          <td class="session-description" data-bills-table-target="descriptionCell">
+            <div class="hover-text">
+              Mais
+            </div>
+            <div class="container-description inactive" data-bills-table-target="voteDescription">
+              <div class="box--description"><%= voto.description %></div>
+            </div>
+          </td>
+        </tr>
       </tr>
-    </tr>
+    <% end %>
   </tbody>
-</table>
-<p>-------------------</p>
-<table data-controller="bills-table">
-  <thead>
-    <tr>
-      <td>Senador</td>
-      <td>Partido</td>
-      <td>Voto</td>
-      <td>Descrição</td>
-    </tr>
-  </thead>
-  <tbody>
-    <% @bill.votes.each do |voto| %>
-      <tr>
-        <td><%= voto.senator.name %></td>
-        <td class="primary-choice"><%= voto.senator.party %></td>
-        <td><%= voto.choice %></td>
-        <td class="session-description" data-bills-table-target="descriptionCell">
-          <div class="hover-text">
-            Mais
-          </div>
-          <div class="position inactive" data-bills-table-target="voteDescription">
-            <div class="box--description"><%= voto.description %></div>
-          </div>
-        </td>
-      </tr>
-    </tr>
-  <% end %>
-</tbody>
 </table>
 </div>
